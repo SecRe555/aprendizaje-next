@@ -103,7 +103,8 @@ export const generateTheme = ({
   scheme: "light" | "dark";
   palette: ColorPalette;
 }) => {
-  const mainColor = scheme === "light" ? colors[palette].light.main : colors[palette].dark.main;
+  const mainColor =
+    scheme === "light" ? colors[palette].light.main : colors[palette].dark.main;
 
   return createTheme({
     cssVariables: true,
@@ -143,7 +144,7 @@ export const generateTheme = ({
             textTransform: "none",
             transition: "transform 0.3s ease-in-out",
             "&:hover": {
-              transform: "translateY(-5px)",//"scale(1.15)",
+              transform: "translateY(-5px)", //"scale(1.15)",
             },
             "&.MuiButton-contained": {
               borderRadius: 15,
@@ -155,14 +156,17 @@ export const generateTheme = ({
       MuiIconButton: {
         styleOverrides: {
           root: {
+            fontSize: "1.20rem",
+            padding: 10,
+            border: `1px solid ${mainColor}80`,
             borderRadius: 15,
             boxShadow: "0 5px 5px -3px rgba(0, 0, 0, 0.7)",
             transition: "transform 0.3s ease-in-out",
-            "&:hover" : {
+            "&:hover": {
               transform: "translateY(-5px)",
-            }
-          }
-        }
+            },
+          },
+        },
       },
       MuiOutlinedInput: {
         styleOverrides: {
@@ -185,8 +189,11 @@ export const generateTheme = ({
           root: {
             "&.MuiAppBar-root": {
               borderRadius: 0,
-              backgroundColor: scheme === "light" ? colors[palette].dark.dark : colors[palette].light.dark,
-              color: scheme === "light" ? "black" : "light"
+              backgroundColor:
+                scheme === "light"
+                  ? colors[palette].dark.dark
+                  : colors[palette].light.dark,
+              color: scheme === "light" ? "black" : "light",
             },
           },
         },
@@ -202,11 +209,15 @@ export const generateTheme = ({
       },
       MuiListItem: {
         styleOverrides: {
-          root: {
-            color: mainColor
+          root:  {
+            color: mainColor,
+            "&:hover": {
+              backgroundColor: mainColor,
+              color: "var(--mui-palette-background-paper)"
+            },
           }
-        }
-      }
+        },
+      },
     },
   });
 };

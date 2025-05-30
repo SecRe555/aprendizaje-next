@@ -7,7 +7,7 @@ interface ThemeState {
 }
 
 export const useThemeState = create<ThemeState>()((set) => ({
-  themeSelected: { theme: "light", palette: "red" },
+  themeSelected: { theme: "system", palette: "amber" },
   setThemeSelected: (theme: ThemePalette) =>
     set((state) => ({ themeSelected: theme })),
 }));
