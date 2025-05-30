@@ -16,11 +16,12 @@ import {
   ListItemIcon,
   ListItemText,
   Box,
+  useTheme,
 } from "@mui/material";
 import { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
 import { Icon } from "@iconify/react";
 import { useState } from "react";
-import { systemTheme } from "@/app/theme";
+import { systemTheme } from "@/theme/theme";
 import { useRouter } from "next/navigation";
 
 const drawerWidth = 240;
@@ -100,14 +101,15 @@ const AppBar = styled(MuiAppBar, {
 
 type NavOption = { icon: string; text: string };
 const options: NavOption[] = [
-  { icon: "line-md:home-md-twotone", text: "Menu Principal"},
+  { icon: "line-md:home-md-twotone", text: "Menu Principal" },
   { icon: "line-md:grid-3-filled", text: "Materias" },
-  { icon: "line-md:chat-filled", text: "Chat"}
+  { icon: "line-md:chat-filled", text: "Chat" },
 ];
 
 export default function LayoutAuth({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
+  const theme = useTheme();
   const [openDrawer, setOpenDrawer] = useState<boolean>(false);
   const router = useRouter();
 
@@ -156,10 +158,10 @@ export default function LayoutAuth({
         <Box sx={{ ...systemTheme.mixins.toolbar }} />
         <List>
           {options.map(({ icon, text }, index) => (
-            <ListItem key={index} className="my-1" disablePadding>
-              <ListItemButton className="min-h-12 px-2 flex justify-start items-center">
-                <ListItemIcon className="min-w-0 justify-center items-center ml-[-11px] mr-1">
-                  <Icon icon={icon} fontSize={24} />
+            <ListItem key={index} className="my-1 text-teal-700" disablePadding>
+              <ListItemButton className="min-h-12 pr-2 flex justify-start items-center gap-0.5" disableRipple>
+                <ListItemIcon className="min-w-0 justify-center items-center ml-[-13px] mr-1">
+                  <Icon icon={icon} fontSize={24} color={theme.palette.primary.main} />
                 </ListItemIcon>
                 <ListItemText primary={text} />
               </ListItemButton>

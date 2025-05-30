@@ -2,8 +2,7 @@ import type { Metadata } from "next";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
 import { Geist, Geist_Mono } from "next/font/google";
 import "@/styles/globals.css";
-import { ThemeProvider } from "@mui/material";
-import { systemTheme, lightTheme, darkTheme } from "./theme";
+import ThemeWrapper from "@/components/global/ThemeWrapper";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,14 +26,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es">
+      <head>
+        <title>Tablero de tareas</title>        
+      </head>
       <AppRouterCacheProvider>
-        <ThemeProvider theme={systemTheme}>
-          <body
-            className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-          >
-            {children}
-          </body>
-        </ThemeProvider>
+        <body
+          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        >
+          <ThemeWrapper>{children}</ThemeWrapper>
+        </body>
       </AppRouterCacheProvider>
     </html>
   );
