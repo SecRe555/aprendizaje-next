@@ -19,13 +19,21 @@ import {
   useTheme,
   Menu,
   MenuItem,
+  Divider,
+  Select,
+  SelectChangeEvent,
+  useMediaQuery,
+  FormControl,
+  InputLabel,
 } from "@mui/material";
 import { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
 import { Icon } from "@iconify/react";
 import { useState } from "react";
 import { systemTheme } from "@/theme/theme";
 import { useRouter } from "next/navigation";
-import { useThemeState } from "@/states/globalState";
+import { useThemeState } from "@/states/themeState";
+import { ColorPalette, ThemePalette } from "@/types/theme/themeTypes";
+import { colors } from "@/theme/themeFactory";
 
 const drawerWidth = 240;
 
@@ -109,6 +117,31 @@ const options: NavOption[] = [
   { icon: "line-md:chat-filled", text: "Chat" },
 ];
 
+const colorLabels: Record<ColorPalette, string> = {
+  red: "Rojo",
+  orange: "Naranja",
+  amber: "Ámbar",
+  yellow: "Amarillo",
+  lime: "Lima",
+  green: "Verde",
+  emerald: "Esmeralda",
+  teal: "Azul verdoso",
+  cyan: "Cian",
+  sky: "Celeste",
+  blue: "Azul",
+  indigo: "Índigo",
+  violet: "Violeta",
+  purple: "Morado",
+  fucshia: "Fucsia",
+  pink: "Rosa",
+  rose: "Rosado",
+  slate: "Pizarra",
+  gray: "Gris",
+  zinc: "Cinc",
+  neutral: "Neutro",
+  stone: "Piedra",
+};
+
 export default function LayoutAuth({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
@@ -126,7 +159,8 @@ export default function LayoutAuth({
 
   const router = useRouter();
   const theme = useTheme();
-  const { themeSelected } = useThemeState();
+  const { themeSelected, setThemeSelected } = useThemeState();
+  const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
 
   return (
     <main className="w-dvw h-dvh flex flex-col">
@@ -186,7 +220,7 @@ export default function LayoutAuth({
               </ListItemIcon>
               Cuenta
             </MenuItem>
-            <MenuItem>
+            {/* <MenuItem>
               <ListItemIcon>
                 {themeSelected.theme === "system" && (
                   <Icon icon="line-md:computer-twotone" />
@@ -203,7 +237,8 @@ export default function LayoutAuth({
             <MenuItem>
               <Box component={"span"} sx={{ width: 18, height: 18, bgcolor: theme.palette.primary.main }} />
               Color
-            </MenuItem>
+            </MenuItem> */}
+            <Divider />
             <MenuItem>
               <ListItemIcon>
                 <Icon icon="line-md:logout" />
@@ -234,6 +269,93 @@ export default function LayoutAuth({
           ))}
         </List>
       </Drawer>
+      <Box className="w-fit fixed bottom-5 right-5 flex gap-4">
+        <FormControl>
+          <InputLabel>Tema</InputLabel>
+          <Select
+            label="Tema"
+            value={themeSelected.theme}
+            onChange={(event: SelectChangeEvent) =>
+              setThemeSelected({
+                ...themeSelected,
+                theme: event.target.value,
+              } as ThemePalette)
+            }
+            MenuProps={{
+              style: { maxHeight: 48 * 5.5 }, // Cada elemento mide 48px con todo y padding
+              slotProps: {
+                paper: {
+                  elevation: 0,
+                  sx: {
+                    borderRadius: 0,
+                  },
+                },
+              },
+            }}
+          >
+            <MenuItem value="system">
+              <ListItemIcon>
+                <Icon icon="line-md:computer-twotone" />
+              </ListItemIcon>
+              Sistema
+            </MenuItem>
+            <MenuItem value="light">
+              <ListItemIcon>
+                <Icon icon="line-md:sun-rising-filled-loop" />
+              </ListItemIcon>
+              Claro
+            </MenuItem>
+            <MenuItem value="dark">
+              <ListItemIcon>
+                <Icon icon="line-md:moon-filled-alt-loop" />
+              </ListItemIcon>
+              Oscuro
+            </MenuItem>
+          </Select>
+        </FormControl>
+        <FormControl>
+          <InputLabel>Paleta</InputLabel>
+          <Select
+            label="Paleta"
+            value={themeSelected.palette}
+            onChange={(event: SelectChangeEvent) =>
+              setThemeSelected({
+                ...themeSelected,
+                palette: event.target.value,
+              } as ThemePalette)
+            }
+            MenuProps={{
+              style: { maxHeight: 48 * 5.5 }, // Cada elemento mide 48px con todo y padding
+              slotProps: {
+                paper: {
+                  elevation: 0,
+                  sx: {
+                    borderRadius: 0,
+                  },
+                },
+              },
+            }}
+          >
+            {Object.entries(colorLabels).map(([key, label]) => (
+              <MenuItem key={key} value={key}>
+                <ListItemIcon>
+                  <Box
+                    component="span"
+                    sx={{
+                      width: 18,
+                      height: 18,
+                      bgcolor: prefersDarkMode
+                        ? colors[key as ColorPalette].dark.main
+                        : colors[key as ColorPalette].light.main,
+                    }}
+                  />
+                </ListItemIcon>
+                {label}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+      </Box>
     </main>
   );
 }

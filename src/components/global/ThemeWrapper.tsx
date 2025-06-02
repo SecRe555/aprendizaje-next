@@ -1,7 +1,7 @@
 "use client";
 
 import { systemTheme, lightTheme, darkTheme } from "@/theme/theme";
-import { useThemeState } from "@/states/globalState";
+import { useThemeState } from "@/states/themeState";
 import { ThemeScheme } from "@/types/theme/themeTypes";
 import { Theme, ThemeProvider, useMediaQuery } from "@mui/material";
 import { useEffect, useState } from "react";
@@ -20,19 +20,17 @@ export default function ThemeWrapper({
 }) {
   const { themeSelected } = useThemeState();
   const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
-  const [theme, setTheme] = useState<Theme>(
-    generateTheme({ scheme: 'dark', palette: themeSelected.palette })
-  );
-
+  const [theme, setTheme] = useState<Theme>();
+  
   useEffect(() => {
-    let scheme: 'light' | 'dark' = 'dark'
+    let scheme: "light" | "dark" = "dark";
     if (themeSelected.theme === "system") {
-      scheme = prefersDarkMode ? "dark" : "light"
+      scheme = prefersDarkMode ? "dark" : "light";
     } else {
-      scheme = themeSelected.theme
+      scheme = themeSelected.theme;
     }
-    setTheme(generateTheme({ scheme: scheme, palette: themeSelected.palette }))
-  }, [themeSelected.theme, prefersDarkMode]);
+    setTheme(generateTheme({ scheme: scheme, palette: themeSelected.palette }));
+  }, [themeSelected, prefersDarkMode]);
 
-  return <ThemeProvider theme={theme}>{children}</ThemeProvider>;
+  return theme ? <ThemeProvider theme={theme}>{children}</ThemeProvider> : <></>;
 }

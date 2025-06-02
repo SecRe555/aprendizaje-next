@@ -5,7 +5,7 @@ import {
 } from "@/types/theme/themeTypes";
 import { createTheme } from "@mui/material";
 
-const colors: Record<ColorPalette, ColorTheme> = {
+export const colors: Record<ColorPalette, ColorTheme> = {
   red: {
     light: { light: "#ef4444", main: "#b91c1c", dark: "#7f1d1d" },
     dark: { light: "#fee2e2", main: "#ff6467", dark: "#ef4444" },
@@ -79,20 +79,20 @@ const colors: Record<ColorPalette, ColorTheme> = {
     dark: { light: "#f1f5f9", main: "#e2e8f0", dark: "#cbd5e1" },
   },
   gray: {
-    light: { light: "#6b7280", main: "#4b5563", dark: "#111827" },
-    dark: { light: "#f9fafb", main: "#d1d5db", dark: "#6b7280" },
+    light: { light: "#99a1af", main: "#4a5565", dark: "#1e2939" },
+    dark: { light: "#f3f4f6", main: "#e5e7eb", dark: "#99a1af" },
   },
   zinc: {
-    light: { light: "#71717a", main: "#52525b", dark: "#18181b" },
-    dark: { light: "#fafafa", main: "#a1a1aa", dark: "#71717a" },
+    light: { light: "#9f9fa9", main: "#52525c", dark: "#27272a" },
+    dark: { light: "#f4f4f5", main: "#e4e4e7", dark: "#9f9fa9" },
   },
   neutral: {
-    light: { light: "#737373", main: "#525252", dark: "#171717" },
-    dark: { light: "#fafafa", main: "#a3a3a3", dark: "#737373" },
+    light: { light: "#a1a1a1", main: "#525252", dark: "#262626" },
+    dark: { light: "#f5f5f5", main: "#e5e5e5", dark: "#a1a1a1" },
   },
   stone: {
-    light: { light: "#78716c", main: "#57534e", dark: "#1c1917" },
-    dark: { light: "#fafaf9", main: "#d6d3d1", dark: "#78716c" },
+    light: { light: "#a6a09b", main: "#57534d", dark: "#292524" },
+    dark: { light: "#f5f5f4", main: "#e7e5e4", dark: "#a6a09b" },
   },
 };
 
@@ -156,6 +156,8 @@ export const generateTheme = ({
       MuiIconButton: {
         styleOverrides: {
           root: {
+            minWidth: 41.19,
+            aspectRatio: 1,
             fontSize: "1.20rem",
             padding: 10,
             border: `1px solid ${mainColor}80`,
